@@ -8,6 +8,7 @@ import scifi from "./books/scifi.json";
 
 const AllTheBooks = ({ genre }) => {
   let genreToUse = [];
+
   if (genre === "fantasy") {
     genreToUse.push(...fantasy);
   } else if (genre === "horror") {
@@ -22,7 +23,7 @@ const AllTheBooks = ({ genre }) => {
   return (
     <div>
       <h2>All Books</h2>
-      <Row>
+      <Row xs={1} sm={2} md={4} xl={6} lg={5}>
         {genreToUse.map((book) => (
           <Col key={book.asin}>
             <Card>
@@ -33,7 +34,8 @@ const AllTheBooks = ({ genre }) => {
               />
               <Card.Body>
                 <Card.Title>{book.title}</Card.Title>
-                <Card.Text>{book.author}</Card.Text>
+                <Card.Title>{book.price + "$"}</Card.Title>
+                <Card.Text>{book.category}</Card.Text>
               </Card.Body>
             </Card>
           </Col>
