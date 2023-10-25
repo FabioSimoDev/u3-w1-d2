@@ -14,6 +14,7 @@ const BookList = ({ books }) => {
 
   const handleBookClick = function (book) {
     setSelected(book.asin === selected ? null : book.asin);
+    console.log("cliccato: ", book.asin, selected);
   };
 
   let filteredBooks = [];
