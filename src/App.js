@@ -3,9 +3,10 @@ import { Container } from "react-bootstrap";
 import MyNav from "./MyNav";
 import SelectGenre from "./SelectGenre";
 import Welcome from "./Welcome";
-import AllTheBooks from "./AllTheBooks";
+import BookList from "./BookList";
 import MyFooter from "./MyFooter";
 import "bootstrap/dist/css/bootstrap.min.css";
+import scifi from "./books/scifi.json";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState("history");
@@ -19,7 +20,7 @@ function App() {
         <MyNav />
         <Welcome />
         <SelectGenre onSelectGenre={handleGenreSelection} />
-        <AllTheBooks genre={selectedGenre} />
+        <BookList books={scifi} genre={selectedGenre} />
         <MyFooter />
       </Container>
     </div>
