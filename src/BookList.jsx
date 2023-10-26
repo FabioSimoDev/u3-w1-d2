@@ -1,10 +1,12 @@
 import SingleBook from "./SingleBook";
-import { Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
+import * as Icon from "react-bootstrap-icons";
 
 const BookList = ({ books }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selected, setSelected] = useState(false);
+  const [bookComments, setBookComments] = useState(undefined);
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -15,6 +17,8 @@ const BookList = ({ books }) => {
   const handleBookClick = function (book) {
     setSelected(book.asin === selected ? null : book.asin);
     console.log("cliccato: ", book.asin, selected);
+    getBookComments(book);
+    // setBookComment(book);
   };
 
   let filteredBooks = [];
@@ -25,6 +29,59 @@ const BookList = ({ books }) => {
   } else {
     filteredBooks.push(...books);
   }
+
+  const getBookComments = async function ({ asin }) {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/${asin}`,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhNjljNWY2ZTNkZDAwMTQ5NWU0NjUiLCJpYXQiOjE2OTgzMjY5ODEsImV4cCI6MTY5OTUzNjU4MX0.zhKwKRo5Y-CAYexH6vgdyvWmMId_znCHZlW7hGmH7I4"
+          }
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setBookComments(data);
+      } else {
+        throw new Error("ERRORE NELLA FETCH");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setBookComment = async function ({ asin }) {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/comments/`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            comment: "TRALLALLERO TRALLALLA",
+            rate: "5",
+            elementId: asin
+          }),
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhNjljNWY2ZTNkZDAwMTQ5NWU0NjUiLCJpYXQiOjE2OTgzMjY5ODEsImV4cCI6MTY5OTUzNjU4MX0.zhKwKRo5Y-CAYexH6vgdyvWmMId_znCHZlW7hGmH7I4",
+            "Content-type": "application/json"
+          }
+        }
+      );
+      if (response.ok) {
+        // const data = await response.json();
+        // setBookComments(data);
+      } else {
+        throw new Error("ERRORE NELLA FETCH");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(filteredBooks.length);
   return (
     <div className="d-flex flex-column gap-3 align-items-center">
       <input type="text" onKeyDown={handleSearch}></input>
@@ -38,6 +95,23 @@ const BookList = ({ books }) => {
           />
         ))}
       </Row>
+      <Container fluid className="bg-secondary">
+        <Row lg={4}>
+          {bookComments &&
+            bookComments.map((comment) => (
+              <Col className="d-flex">
+                <Col lg={2}>
+                  <Icon.PersonFill />
+                </Col>
+                <Col
+                  style={{ borderLeft: "1px solid black", paddingLeft: "10px" }}
+                >
+                  {comment.comment}
+                </Col>
+              </Col>
+            ))}
+        </Row>
+      </Container>
     </div>
   );
 };

@@ -5,7 +5,11 @@ const SingleBook = ({ book, isSelected, onClick }) => {
   return (
     // <Row xs={1} sm={2} md={4} xl={6} lg={5}>
     <Col>
-      <Card className={isSelected ? "selected-book" : ""} onClick={onClick}>
+      <Card
+        className={isSelected ? "selected-book" : ""}
+        onClick={onClick}
+        role="button"
+      >
         <Card.Img variant="top" src={book.img} alt={`Cover of ${book.title}`} />
         <Card.Body>
           <Card.Title>{book.title}</Card.Title>
