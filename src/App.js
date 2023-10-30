@@ -7,6 +7,9 @@ import BookList from "./BookList";
 import MyFooter from "./MyFooter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import scifi from "./books/scifi.json";
+import fantasy from "./books/fantasy.json";
+import { Row, Col } from "react-bootstrap";
+import RightSection from "./RIghtSection";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState("history");
@@ -16,12 +19,14 @@ function App() {
   };
   return (
     <div>
-      <Container>
+      <Container fluid className="">
         <MyNav />
-        <Welcome />
-        <SelectGenre onSelectGenre={handleGenreSelection} />
-        <BookList books={scifi} genre={selectedGenre} />
-        <MyFooter />
+        <Row className="px-5">
+          <Welcome />
+          <SelectGenre onSelectGenre={handleGenreSelection} />
+          <BookList books={fantasy} genre={selectedGenre} />
+          <MyFooter />
+        </Row>
       </Container>
     </div>
   );

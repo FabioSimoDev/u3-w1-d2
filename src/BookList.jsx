@@ -1,7 +1,7 @@
 import SingleBook from "./SingleBook";
 import { Container, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
-import * as Icon from "react-bootstrap-icons";
+import RightSection from "./RIghtSection";
 
 const BookList = ({ books }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +15,7 @@ const BookList = ({ books }) => {
   };
 
   const handleBookClick = function (book) {
-    setSelected(book.asin === selected ? null : book.asin);
+    setSelected(book.asin === selected ? selected : book.asin);
     console.log("cliccato: ", book.asin, selected);
     getBookComments(book);
     // setBookComment(book);
@@ -84,34 +84,33 @@ const BookList = ({ books }) => {
   console.log(filteredBooks.length);
   return (
     <div className="d-flex flex-column gap-3 align-items-center">
-      <input type="text" onKeyDown={handleSearch}></input>
-      <Row xs={1} sm={2} md={4} xl={6} lg={5}>
-        {filteredBooks.map((book) => (
-          <SingleBook
-            book={book}
-            key={book.asin}
-            isSelected={book.asin === selected}
-            onClick={() => handleBookClick(book)}
-          />
-        ))}
-      </Row>
-      <Container fluid className="bg-secondary">
-        <Row lg={4}>
-          {bookComments &&
-            bookComments.map((comment) => (
-              <Col className="d-flex">
-                <Col lg={2}>
-                  <Icon.PersonFill />
-                </Col>
-                <Col
-                  style={{ borderLeft: "1px solid black", paddingLeft: "10px" }}
-                >
-                  {comment.comment}
-                </Col>
-              </Col>
+      <input
+        type="text"
+        onKeyDown={handleSearch}
+        placeholder="Cerca un libro"
+      ></input>
+      <div className="d-flex">
+        <Col xs={10}>
+          <Row xs={1} sm={2} md={4} xl={6} lg={5} className="pe-5">
+            {filteredBooks.map((book) => (
+              <SingleBook
+                book={book}
+                key={book.asin}
+                isSelected={book.asin === selected}
+                onClick={() => handleBookClick(book)}
+                bookCommentState={() => {
+                  getBookComments(book);
+                }}
+              />
             ))}
-        </Row>
-      </Container>
+          </Row>
+        </Col>
+        <Col xs={2}>
+          <Row className="sticky-top">
+            <RightSection bookComments={bookComments} />
+          </Row>
+        </Col>
+      </div>
     </div>
   );
 };
