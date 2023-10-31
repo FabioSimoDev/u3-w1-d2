@@ -91,7 +91,7 @@ const BookList = ({ books }) => {
       ></input>
       <div className="d-flex">
         <Col xs={10}>
-          <Row xs={1} sm={2} md={4} xl={6} lg={5} className="pe-5">
+          <Row xs={1} sm={2} md={4} xl={6} lg={5} className="pe-5 gy-3">
             {filteredBooks.map((book) => (
               <SingleBook
                 book={book}
@@ -105,8 +105,8 @@ const BookList = ({ books }) => {
             ))}
           </Row>
         </Col>
-        <Col xs={2}>
-          <Row className="sticky-top">
+        <Col xs={2} className="">
+          <Row className="sticky-top vh-100">
             <RightSection bookComments={bookComments} />
           </Row>
         </Col>

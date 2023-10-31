@@ -7,7 +7,7 @@ const CommentArea = function ({ bookComments }) {
   };
 
   return (
-    <Container fluid className="bg-body-secondary" id="comments">
+    <Container fluid className="bg-body-secondary h-100" id="comments">
       <Row lg={1} className="gx-3 gy-3 py-3">
         {bookComments && bookComments.length > 0 && (
           <>
@@ -45,11 +45,16 @@ const CommentArea = function ({ bookComments }) {
                   }}
                   className="flex-shrink-1 d-flex flex-column text-truncate"
                 >
-                  <p className="fw-bold m-0 text-truncate">{comment.comment}</p>
+                  <p
+                    title={comment.comment}
+                    className="fw-bold m-0 text-truncate"
+                  >
+                    {comment.comment}
+                  </p>
                   <small className="my-2">{comment.author.split("@")[0]}</small>
                   <div>
-                    {getRatingStars(comment.rate).map(() => (
-                      <small className="text-warning">
+                    {getRatingStars(comment.rate).map((undef, index) => (
+                      <small key={index} className="text-warning">
                         <Icon.StarFill />
                       </small>
                     ))}

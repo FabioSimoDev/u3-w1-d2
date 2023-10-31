@@ -4,6 +4,13 @@ import "./SingleBook.css";
 import AddComment from "./AddComment";
 
 const SingleBook = ({ book, isSelected, onClick, bookCommentState }) => {
+  const aspectRatio = 1.5;
+  function resizeImage(img = undefined) {
+    if (img) {
+      const calculatedHeight = aspectRatio * img.clientWidth;
+      img.style.height = `${calculatedHeight}px`;
+    }
+  }
   return (
     // <Row xs={1} sm={2} md={4} xl={6} lg={5}>
     <Col>
@@ -25,6 +32,7 @@ const SingleBook = ({ book, isSelected, onClick, bookCommentState }) => {
             variant="top"
             src={book.img}
             alt={`Cover of ${book.title}`}
+            onLoad={(e) => resizeImage(e.target)}
           />
         )}
         {isSelected && (
