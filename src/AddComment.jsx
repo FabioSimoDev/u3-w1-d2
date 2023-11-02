@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import React, { useState } from "react";
 
 const AddComment = function ({ book, bookCommentState }) {
-  console.log(bookCommentState);
   const [commentData, setCommentData] = useState({ elementId: book.asin });
   const handleInputChange = function (key, value) {
     setCommentData({ ...commentData, [key]: value });

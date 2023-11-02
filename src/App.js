@@ -21,7 +21,7 @@ function App() {
     <div>
       <Container fluid className="">
         <MyNav />
-        <Row className="px-5">
+        <Row className="px-5" onContextMenu={(e) => e.preventDefault()}>
           <Welcome />
           <SelectGenre onSelectGenre={handleGenreSelection} />
           <BookList books={fantasy} genre={selectedGenre} />
